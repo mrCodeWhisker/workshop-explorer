@@ -1,5 +1,7 @@
-﻿using Api.Interfaces;
+﻿using System.Data;
+using Api.Interfaces;
 using Api.Models;
+using Api.Models.Request;
 using Dapper;
 
 namespace Api.Repositories;
@@ -23,13 +25,14 @@ public class PlayerRepository(IDbContext dbContext) : IPlayerRepository
         return player;
     }
 
-    public async Task CreateAsync(Player player)
+    public async Task UpsertAsync(UpsertPlayerRequest request)
     {
-        const string sql = @"INSERT INTO player (id, username, passwordhash, createdby) 
-                             VALUES (@id, @username, @passwordhash, @createdby)";
-        
         using var connection = dbContext.GetConnection();
-        await connection.ExecuteAsync(sql, player);
+        
+        await connection.ExecuteAsync(
+            "SELECT player_upsert(@Id, @Username, @PasswordHash, @IsDeleted, @CreatedAt, @CreatedBy, @UpdatedAt, @UpdatedBy);",
+            request
+        );
     }
 
     public Task UpdateAsync(Player player)

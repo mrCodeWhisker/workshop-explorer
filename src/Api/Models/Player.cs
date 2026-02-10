@@ -2,12 +2,12 @@
 
 public class Player
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public required string Username { get; set; }
     public string PasswordHash { get; set; } = string.Empty;
     public bool? IsDeleted { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public int CreatedBy { get; set; }
+    public Guid CreatedBy { get; set; }
     public DateTime? UpdatedAt { get; set; }
-    public int? UpdatedBy { get; set; }
+    public Guid? UpdatedBy { get; set; }
 }

@@ -1,7 +1,9 @@
-﻿using Api.Interfaces;
+﻿using Api.Config;
+using Api.Interfaces;
 using Api.Models;
 using Api.Models.Request;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 namespace Api.Endpoints;
 
@@ -36,14 +38,18 @@ public static class PlayerEndpoints
         {
             return Results.BadRequest();
         }
-        
-        var player = new Player()
+
+        var player = new UpsertPlayerRequest()
         {
+            Id = Guid.Parse("79582157-7f19-40b6-a84d-4129dd392bb2"),
             Username = request.Username,
-            CreatedAt =  DateTime.UtcNow,
-            CreatedBy = 
-        }
-        
-        await repository.CreateAsync()
+            PasswordHash = request.Password,
+            CreatedAt = DateTime.UtcNow,
+            CreatedBy = SystemConfig.SystemUserId
+        };
+
+        await repository.UpsertAsync(player);
+
+        return Results.Created();
     }
 }
