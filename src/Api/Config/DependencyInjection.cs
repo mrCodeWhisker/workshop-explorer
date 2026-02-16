@@ -1,4 +1,6 @@
-﻿using Api.Interfaces;
+﻿using Api.Features.SteamworksApi.Services;
+using Api.Interfaces;
+using Api.Models.MappingProfiles;
 using Api.Repositories;
 
 namespace Api.Config;
@@ -9,5 +11,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IDbContext, DbContext>();
         services.AddScoped<IPlayerRepository, PlayerRepository>();
+        services.AddScoped<IWorkshopExplorer, SteamWorkshopExplorer>();
+        services.AddAutoMapper(cfg => { }, typeof(SteamApiProfile));
     }
 }

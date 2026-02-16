@@ -1,5 +1,7 @@
 using Api.Config;
 using Api.Endpoints;
+using Api.Features.SteamworksApi.Services;
+using Api.Models.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddGlobalDependencies(builder.Configuration);
+builder.Services.AddHttpClient<SteamWorkshopExplorer>();
 
 var app = builder.Build();
 
@@ -19,6 +22,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UsePlayerEndpoints();
+app.UseWorkshopEndpoints();
 
 app.UseHttpsRedirection();
 

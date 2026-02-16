@@ -41,7 +41,7 @@ public static class PlayerEndpoints
 
         var player = new UpsertPlayerRequest()
         {
-            Id = Guid.Parse("79582157-7f19-40b6-a84d-4129dd392bb2"),
+            Id = Guid.NewGuid(),
             Username = request.Username,
             PasswordHash = request.Password,
             CreatedAt = DateTime.UtcNow,
